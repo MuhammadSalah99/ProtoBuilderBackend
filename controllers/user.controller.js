@@ -51,11 +51,11 @@ const { email, password } = req.body;
    });
 
    if (user) {
-     const isSame = await bcrypt.compare(password, user.password);
+     const isSame = await bycrypt.compare(password, user.password);
 
 
      if (isSame) {
-       let token = jwt.sign({ id: user.id }, process.env.secretKey, {
+       let token = jwt.sign({ id: user.id }, 'asdasdasd', {
          expiresIn: 1 * 24 * 60 * 60 * 1000,
        });
          
