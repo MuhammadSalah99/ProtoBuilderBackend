@@ -24,4 +24,9 @@ db.sequelize = sequelize
 db.blogs  = require("./blogs.model.js")(sequelize, Sequelize)
 db.projects = require("./projecs.model.js")(sequelize, Sequelize)
 db.users = require("./users.model.js")(sequelize, Sequelize)
+db.users.hasMany(db.blogs, { as: "blogs" });
+db.blogs.belongsTo(db.users, {
+  foreignKey: "userId",
+  as: "user"
+});
 module.exports = db

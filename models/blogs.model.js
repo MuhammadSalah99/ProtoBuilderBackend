@@ -6,11 +6,13 @@ module.exports = (sequelize, Sequelize) => {
         description: {
             type: Sequelize.STRING
         },
+        body: {
+            type: Sequelize.STRING
+        },
         published: {
             type: Sequelize.BOOLEAN
         }
-    });
-
+    })
     return Blog
 
 };

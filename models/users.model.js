@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
         userName: {
@@ -15,5 +16,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
     }, { timestamps: true },)
+
     return User
+
 };
