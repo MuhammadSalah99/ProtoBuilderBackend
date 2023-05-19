@@ -9,6 +9,7 @@ const User = db.users;
 const signup = async (req, res) => {
 
     try {
+        console.log(req.body, 'cin')
 
         const {userName, email, password} = req.body;
         const data = {
@@ -17,10 +18,10 @@ const signup = async (req, res) => {
             password: await bycrypt.hash(password, 10),
         };
 
-        const user = await User.create(date);
+        const user = await User.create(data);
 
         if (user) {
-            let token = jwt.sign({id: user.id}, process.env.secertKey, {
+            let token = jwt.sign({id: user.id}, 'adsasdasd', {
                 expiresIn: 1 * 24 * 60 * 60 * 1000,
             })
 

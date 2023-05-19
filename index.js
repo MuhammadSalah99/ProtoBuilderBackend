@@ -7,7 +7,7 @@ const db = require("./models")
 const userRouter = require("./routes/user.route.js");
 const cookieParser = require("cookie-parser");
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8080"
 };
 
 app.use(cors(corsOptions));
@@ -16,10 +16,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-db.sequelize.sync({force: true})
+
+db.sequelize.sync()
     .then(()=> {
         console.log("synced db")
     })
