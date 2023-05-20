@@ -3,11 +3,11 @@ module.exports = (sequelize, Sequelize) => {
         title: {
             type: Sequelize.STRING
         },
-        description: {
+        content: {
             type: Sequelize.STRING
         },
-        published: {
-            type: Sequelize.BOOLEAN
+        clientName: {
+            type: Sequelize.STRING
         }
     });
 

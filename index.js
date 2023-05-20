@@ -6,7 +6,7 @@ const cookieParer = require('cookie-parser')
 const db = require("./models")
 const userRouter = require("./routes/user.route.js");
 const blogRouter = require('./routes/blog.route.js');
-
+const projectRouter = require('./routes/project.route.js')
 const cookieParser = require("cookie-parser");
 var corsOptions = {
   origin: "http://localhost:8080"
@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/users', userRouter)
 app.use('/api', blogRouter)
-
+app.use('/api', projectRouter)
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
