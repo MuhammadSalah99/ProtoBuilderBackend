@@ -37,5 +37,5 @@ db.projects.belongsTo(db.users, {
     foreignKey: "userId",
     as: "user"
 });
-console.log('hi')
+
 module.exports = db

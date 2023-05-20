@@ -1,7 +1,6 @@
 const bycrypt = require('bcrypt')
 const db = require('../models')
 const jwt = require('jsonwebtoken');
-const { log } = require('console');
 
 
 const User = db.users;

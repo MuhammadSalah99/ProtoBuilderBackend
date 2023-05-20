@@ -3,15 +3,10 @@ module.exports = (sequelize, Sequelize) => {
         title: {
             type: Sequelize.STRING
         },
-        description: {
-            type: Sequelize.STRING
+        content: {
+            type: Sequelize.STRING,
+            allowNull: false
         },
-        body: {
-            type: Sequelize.STRING
-        },
-        published: {
-            type: Sequelize.BOOLEAN
-        }
     })
     return Blog
 
