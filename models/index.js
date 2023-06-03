@@ -2,18 +2,7 @@ const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize")
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    dialect: dbConfig.dialect,
-    operatorsAliases: false,
-
-    pool: {
-        max: dbConfig.pool.max,
-        min: dbConfig.pool.min,
-        acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle
-    }
-});
+const sequelize = new Sequelize('postgresql://postgres:db1rowWzK6WxIFjJYf3G@containers-us-west-115.railway.app:6212/railway') // Example for postgres
 
 
 const db = {};
