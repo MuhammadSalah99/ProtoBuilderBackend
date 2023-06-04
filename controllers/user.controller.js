@@ -10,11 +10,15 @@ const signup = async (req, res) => {
     try {
         console.log(req.body, 'cin')
 
-        const {userName, email, password} = req.body;
+        const {userName, email, password, role, major, phone, officeAddress} = req.body;
         const data = {
             userName,
             email,
             password: await bycrypt.hash(password, 10),
+            role,
+            major,
+            phone,
+            officeAddress
         };
 
         const user = await User.create(data);

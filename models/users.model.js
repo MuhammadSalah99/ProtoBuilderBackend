@@ -28,7 +28,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: true,
         },
-        officeAddres: {
+        officeAddress: {
             type: Sequelize.STRING,
             allowNull: true
         }
