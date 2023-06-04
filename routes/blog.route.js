@@ -5,16 +5,12 @@ const router  = express.Router()
 
 router.get('/blogs', blogCont.getAllBlogs);
 
-// POST /blogs
 router.post('/blogs', blogCont.createBlog);
 
-// GET /blogs/:id
 router.get('/blogs/:id', blogCont.getBlogById);
 
-// PUT /blogs/:id
 router.put('/blogs/:id', blogCont.updateBlog);
 
-// DELETE /blogs/:id
 router.delete('/blogs/:id', blogCont.deleteBlog);
 
 

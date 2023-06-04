@@ -2,7 +2,6 @@ const db = require('../models')
 const Blog = db.blogs;
 
 
-// GET /blogs
 const getAllBlogs = async (req, res) =>  {
   try {
     const blogs = await Blog.findAll();
@@ -13,7 +12,6 @@ const getAllBlogs = async (req, res) =>  {
   }
 }
 
-// POST /blogs
 async function createBlog(req, res) {
   const { title, content, userId } = req.body;
   
@@ -26,7 +24,6 @@ async function createBlog(req, res) {
   }
 }
 
-// GET /blogs/:id
 async function getBlogById(req, res) {
   const blogId = req.params.id;
   
@@ -42,7 +39,6 @@ async function getBlogById(req, res) {
   }
 }
 
-// PUT /blogs/:id
 async function updateBlog(req, res) {
   const blogId = req.params.id;
   const { title, content } = req.body;
@@ -62,7 +58,6 @@ async function updateBlog(req, res) {
   }
 }
 
-// DELETE /blogs/:id
 async function deleteBlog(req, res) {
   const blogId = req.params.id;
   

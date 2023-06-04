@@ -15,6 +15,23 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
+        role: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            defaultValue: 'Client'
+        },
+        major: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        phone: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        officeAddres: {
+            type: Sequelize.STRING,
+            allowNull: true
+        }
     }, { timestamps: true },)
 
     return User
