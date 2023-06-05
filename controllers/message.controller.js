@@ -1,6 +1,5 @@
 const db = require('../models')
 const Message = db.messages
-const User = db.users
 const { Op } = require("sequelize");
 
 const getMessages = async (req, res) => {
@@ -36,13 +35,16 @@ const getMessagesForUser = async (req, res) => {
 
         const messages = await Message.findAll({
             where: {
-                     senderId: userId ,
-                
+                [Op.or]: [
+                    { senderId: userId },
+                    { receiverId: userId }
+                ]
             },
         });
 
         res.json(messages);
     } catch (error) {
+        console.error('Error fetching messages:', error);
         res.status(500).json({ error: error });
     }
 };
