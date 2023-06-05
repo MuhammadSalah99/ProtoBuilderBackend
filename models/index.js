@@ -26,7 +26,7 @@ db.projects.belongsTo(db.users, {
     foreignKey: "userId",
     as: "user"
 });
-db.messages.belongsTo(User, { as: 'sender', foreignKey: 'senderId' });
-db.messages.belongsTo(User, { as: 'receiver', foreignKey: 'receiverId' });
+db.messages.belongsTo(db.users, { as: 'sender', foreignKey: 'senderId' });
+db.messages.belongsTo(db.users, { as: 'receiver', foreignKey: 'receiverId' });
 
 module.exports = db
