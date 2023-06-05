@@ -31,7 +31,7 @@ const sendMessage = async (req, res) => {
 const getMessagesForUser = async (req, res) => {
 
     try {
-        const userId = req.params.id
+        const {userId} = req.params.id
 
         const messages = await Message.findAll({
             where: {
