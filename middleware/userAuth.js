@@ -1,5 +1,6 @@
 const express = require('express')
 const db = require('../models')
+const jwt = require('jsonwebtoken');
 
 const User = db.users;
 
@@ -32,7 +33,33 @@ const saveUser = async(req, res, next)=> {
     }
 
 };
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  jwt.verify(token, 'your_secret_key', async (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const user = await User.findByPk(decoded.userId);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    req.user = user;
+
+    next();
+  });
+};
+
 module.exports = {
     saveUser,
+    verifyToken
 };
     
