@@ -34,7 +34,7 @@ exports.getMessagesForUser = async (req, res) => {
 
     const messages = await Message.findAll({
       where: {
-        $or: [
+        or: [
           { senderId: userId },
           { receiverId: userId }
         ]
