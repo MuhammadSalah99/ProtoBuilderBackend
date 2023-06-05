@@ -5,6 +5,6 @@ const { getMessages, sendMessage, getMessagesForUser } = require('../controllers
 
 router.get('/messages',  getMessages);
 router.post('/messages',  sendMessage);
-router.get('/users/:userId/messages', getMessagesForUser);
+router.get('/users/:userId', getMessagesForUser);
 module.exports = router;
 
