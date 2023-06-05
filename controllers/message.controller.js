@@ -27,3 +27,26 @@ exports.sendMessage = async (req, res) => {
     res.status(500).json({ error: 'Failed to send message' });
   }
 };
+
+exports.getMessagesForUser = async (req, res) => {
+  try {
+    const  userId  = req.params.id
+
+    const messages = await Message.findAll({
+      where: {
+        $or: [
+          { senderId: userId },
+          { receiverId: userId }
+        ]
+      },
+      include: [
+        { model: User, as: 'sender' },
+        { model: User, as: 'receiver' }
+      ]
+    });
+
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch messages' });
+  }
+};
