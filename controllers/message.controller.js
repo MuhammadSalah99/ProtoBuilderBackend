@@ -30,6 +30,7 @@ exports.sendMessage = async (req, res) => {
 };
 
 exports.getMessagesForUser = async (req, res) => {
+
   try {
     const   userId  = req.params.id
 
@@ -48,6 +49,7 @@ exports.getMessagesForUser = async (req, res) => {
 
     res.json(messages);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch messages' });
+    const   userId  = req.params.id
+    res.status(500).json({ error: `${userId} Error`});
   }
 };
