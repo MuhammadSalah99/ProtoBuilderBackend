@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 app.use('/api/users', userRouter)
 app.use('/api', blogRouter)
 app.use('/api', projectRouter)
-app.use('/api', messageRouter)
+app.use('/api/msg', messageRouter)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
