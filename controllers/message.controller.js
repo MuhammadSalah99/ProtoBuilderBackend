@@ -1,7 +1,7 @@
 const db = require('../models')
 const Message = db.messages
 const { Op } = require("sequelize");
-
+const User = db.users
 const getMessages = async (req, res) => {
     try {
         const messages = await Message.findAll();
@@ -31,7 +31,7 @@ const sendMessage = async (req, res) => {
 const getMessagesForUser = async (req, res) => {
 
     try {
-        const {userId} = req.params
+        const { userId } = req.params
 
         const messages = await Message.findAll({
             where: {
@@ -40,6 +40,10 @@ const getMessagesForUser = async (req, res) => {
                     { receiverId: userId }
                 ]
             },
+            include: [
+                { model: User, as: 'sender' },
+                { model: User, as: 'receiver' }
+            ]
         });
 
         res.json(messages);
