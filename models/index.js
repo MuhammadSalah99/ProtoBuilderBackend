@@ -13,7 +13,7 @@ db.sequelize = sequelize
 db.blogs  = require("./blogs.model.js")(sequelize, Sequelize)
 db.projects = require("./projecs.model.js")(sequelize, Sequelize)
 db.users = require("./users.model.js")(sequelize, Sequelize)
-
+db.messages = require('./messages.model.js')(sequelize, Sequelize)
 db.users.hasMany(db.blogs, { as: "blogs" });
 db.blogs.belongsTo(db.users, {
   foreignKey: "userId",
@@ -26,5 +26,7 @@ db.projects.belongsTo(db.users, {
     foreignKey: "userId",
     as: "user"
 });
+db.messages.belongsTo(User, { as: 'sender', foreignKey: 'senderId' });
+db.messages.belongsTo(User, { as: 'receiver', foreignKey: 'receiverId' });
 
 module.exports = db
