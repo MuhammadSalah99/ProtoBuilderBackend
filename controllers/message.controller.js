@@ -1,6 +1,6 @@
 const db = require('../models')
 const Message = db.messages
-
+const User = db.users
 
 exports.getMessages = async (req, res) => {
   try {
