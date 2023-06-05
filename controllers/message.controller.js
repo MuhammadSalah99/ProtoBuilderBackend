@@ -3,7 +3,7 @@ const Message = db.messages
 const User = db.users
 const { Op } = require("sequelize");
 
-exports.getMessages = async (req, res) => {
+const getMessages = async (req, res) => {
   try {
     const messages = await Message.findAll();
     res.json(messages);
@@ -12,7 +12,7 @@ exports.getMessages = async (req, res) => {
   }
 };
 
-exports.sendMessage = async (req, res) => {
+const sendMessage = async (req, res) => {
   try {
     const { senderId, receiverId, content } = req.body;
 
@@ -29,7 +29,7 @@ exports.sendMessage = async (req, res) => {
   }
 };
 
-exports.getMessagesForUser = async (req, res) => {
+const getMessagesForUser = async (req, res) => {
 
   try {
     const   userId  = req.params.id
@@ -49,7 +49,12 @@ exports.getMessagesForUser = async (req, res) => {
 
     res.json(messages);
   } catch (error) {
-    const   userId  = req.params.id
-    res.status(500).json({ error: `${userId} Error`});
+    res.status(500).json({ error: error});
   }
 };
+
+module.exports = {
+    getMessages,
+    sendMessage,
+    getMessagesForUser
+}
