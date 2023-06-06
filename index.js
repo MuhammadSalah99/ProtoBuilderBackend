@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-db.sequelize.sync()
+db.sequelize.sync({force: true})
     .then(()=> {
         console.log("synced db")
     })

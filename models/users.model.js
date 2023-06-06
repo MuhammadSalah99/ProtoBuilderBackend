@@ -1,3 +1,4 @@
+const { match } = require("assert");
 
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
@@ -25,6 +26,18 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         phone: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        city: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        bio: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
+        profilePic: {
             type: Sequelize.STRING,
             allowNull: true,
         },
