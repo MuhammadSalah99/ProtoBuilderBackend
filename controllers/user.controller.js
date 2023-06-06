@@ -2,7 +2,7 @@ const bycrypt = require('bcrypt')
 const db = require('../models')
 const jwt = require('jsonwebtoken');
 const { off } = require('process');
-
+const { Op } = require('sequelize');
 
 const User = db.users;
 
@@ -134,9 +134,22 @@ const getUserById = async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve user information' });
     }
 };
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.findAll({
+            attributes: ['firstName', 'lastName', 'phone', 'city', 'officeAddress', 'major', 'bio'],
+            where: { role: 'Engineer' },
+        });
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch users' });
+    }
+};
 module.exports = {
     signup,
     login,
+    getAllUsers,
     editUser,
     getUserById
 }
