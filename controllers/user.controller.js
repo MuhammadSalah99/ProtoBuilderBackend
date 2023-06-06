@@ -1,6 +1,7 @@
 const bycrypt = require('bcrypt')
 const db = require('../models')
 const jwt = require('jsonwebtoken');
+const { off } = require('process');
 
 
 const User = db.users;
@@ -10,7 +11,7 @@ const signup = async (req, res) => {
     try {
         console.log(req.body, 'cin')
 
-        const {userName, email, password, role, major, phone,city,  officeAddress} = req.body;
+        const { userName, email, password, role, major, phone, city, officeAddress } = req.body;
         const data = {
             userName,
             email,
@@ -26,16 +27,16 @@ const signup = async (req, res) => {
         const user = await User.create(data);
 
         if (user) {
-            let token = jwt.sign({id: user.id}, 'adsasdasd', {
+            let token = jwt.sign({ id: user.id }, 'adsasdasd', {
                 expiresIn: 1 * 24 * 60 * 60 * 1000,
             })
 
-            res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true});
+            res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
             console.log("user", JSON.stringify(user, null, 2));
             console.log(token)
-            
-            res.status(201).json({message: "login successful", user, token})
-       } else {
+
+            res.status(201).json({ message: "login successful", user, token })
+        } else {
             return res.status(409).send("Deatils are not correct!")
         }
     } catch (error) {
@@ -45,43 +46,76 @@ const signup = async (req, res) => {
 
 
 const login = async (req, res) => {
- try {
-const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-   const user = await User.findOne({
-     where: {
-     email: email
-   } 
-     
-   });
+        const user = await User.findOne({
+            where: {
+                email: email
+            }
 
-   if (user) {
-     const isSame = await bycrypt.compare(password, user.password);
+        });
+
+        if (user) {
+            const isSame = await bycrypt.compare(password, user.password);
 
 
-     if (isSame) {
-       let token = jwt.sign({ id: user.id }, 'asdasdasd', {
-         expiresIn: 1 * 24 * 60 * 60 * 1000,
-       });
-         
-       res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-       console.log("user", JSON.stringify(user, null, 2));
-       console.log(token);
-         
-       return res.status(201).json({token, user})
-     } else {
-       return res.status(401).send("Authentication failed");
-     }
-   } else {
-     return res.status(401).send("Authentication failed");
-   }
- } catch (error) {
-   console.log(error);
- }
+            if (isSame) {
+                let token = jwt.sign({ id: user.id }, 'asdasdasd', {
+                    expiresIn: 1 * 24 * 60 * 60 * 1000,
+                });
+
+                res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
+                console.log("user", JSON.stringify(user, null, 2));
+                console.log(token);
+
+                return res.status(201).json({ token, user })
+            } else {
+                return res.status(401).send("Authentication failed");
+            }
+        } else {
+            return res.status(401).send("Authentication failed");
+        }
+    } catch (error) {
+        console.log(error);
+    }
 };
 
+const editUser = async (req, res) => {
+    const { userId } = req.params; 
+    const { major, phone, city, bio, profilePic, officeAddress, firstName, lastName } = req.body;
 
+    try {
+        // Find the user by ID
+        const user = await User.findByPk(userId)
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Update the user information
+        user.major = major;
+        user.city = city;
+        user.officeAddress = officeAddress;
+        user.phone = phone;
+        user.bio = bio;
+        user.profilePic = profilePic;
+        user.firstName = firstName;
+        user.lastName = lastName
+        
+        // Update additional fields as needed
+
+        // Save the changes
+        await user.save();
+
+        res.json({ message: 'User information updated successfully', user });
+    } catch (error) {
+        console.error('Error updating user information:', error);
+        res.status(500).json({ error: 'Failed to update user information' });
+    }
+};
 module.exports = {
     signup,
     login,
+    editUser
 }

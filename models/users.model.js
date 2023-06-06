@@ -44,7 +44,16 @@ module.exports = (sequelize, Sequelize) => {
         officeAddress: {
             type: Sequelize.STRING,
             allowNull: true
+        },
+        firstName: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        lastName: {
+            type: Sequelize.STRING,
+            allowNull: true,
         }
+        
     }, { timestamps: true },)
 
     return User
