@@ -82,7 +82,7 @@ const login = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-    const { userId } = req.params; 
+    const { userId } = req.params;
     const { major, phone, city, bio, profilePic, officeAddress, firstName, lastName } = req.body;
 
     try {
@@ -102,7 +102,7 @@ const editUser = async (req, res) => {
         user.profilePic = profilePic;
         user.firstName = firstName;
         user.lastName = lastName
-        
+
         // Update additional fields as needed
 
         // Save the changes
@@ -114,8 +114,29 @@ const editUser = async (req, res) => {
         res.status(500).json({ error: 'Failed to update user information' });
     }
 };
+
+const getUserById = async (req, res) => {
+    const { id } = req.params; // Assuming the user ID is passed as a parameter in the request URL
+
+    try {
+        // Find the user by ID
+        const user = await User.findByPk(id, {
+            attributes: ['firstName', 'lastName', 'major', 'city', 'officeAddress', 'phone', 'bio'],
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error('Error retrieving user information:', error);
+        res.status(500).json({ error: 'Failed to retrieve user information' });
+    }
+};
 module.exports = {
     signup,
     login,
-    editUser
+    editUser,
+    getUserById
 }
