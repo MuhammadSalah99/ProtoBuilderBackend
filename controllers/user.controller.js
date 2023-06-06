@@ -10,7 +10,7 @@ const signup = async (req, res) => {
     try {
         console.log(req.body, 'cin')
 
-        const {userName, email, password, role, major, phone, officeAddress} = req.body;
+        const {userName, email, password, role, major, phone,city,  officeAddress} = req.body;
         const data = {
             userName,
             email,
@@ -18,7 +18,9 @@ const signup = async (req, res) => {
             role,
             major,
             phone,
+            city,
             officeAddress
+
         };
 
         const user = await User.create(data);
