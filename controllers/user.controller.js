@@ -116,11 +116,11 @@ const editUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-    const { id } = req.params; // Assuming the user ID is passed as a parameter in the request URL
+    const { userId } = req.params; // Assuming the user ID is passed as a parameter in the request URL
 
     try {
         // Find the user by ID
-        const user = await User.findByPk(id, {
+        const user = await User.findByPk(userId, {
             attributes: ['firstName', 'lastName', 'major', 'city', 'officeAddress', 'phone', 'bio'],
         });
 
