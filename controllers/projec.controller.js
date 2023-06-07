@@ -11,7 +11,6 @@ async function getAllProjects(req, res) {
   }
 }
 
-// POST /projects
 async function createProject(req, res) {
   const { title, content,  clientName } = req.body;
   
