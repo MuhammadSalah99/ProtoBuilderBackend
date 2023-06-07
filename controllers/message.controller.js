@@ -34,10 +34,8 @@ const getMessagesForUser = async (req, res) => {
     try {
         const messages = await Message.findAll({
             where: {
-                [Op.or]: [
-                    { senderId },
-                    { receiverId },
-                ],
+                senderId,
+                receiverId,
             },
             include: [
                 { model: User, as: 'sender' },
