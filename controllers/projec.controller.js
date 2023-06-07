@@ -23,7 +23,6 @@ async function createProject(req, res) {
   }
 }
 
-// GET /projects/:id
 async function getProjectById(req, res) {
   const projectId = req.params.id;
   
