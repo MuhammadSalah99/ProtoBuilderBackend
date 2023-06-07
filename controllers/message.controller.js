@@ -34,13 +34,23 @@ const getMessagesForUser = async (req, res) => {
     try {
         const messages = await Message.findAll({
             where: {
-                senderId,
-                receiverId,
+                senderId: [senderId, receiverId],
+                receiverId: [senderId, receiverId],
             },
             include: [
-                { model: User, as: 'sender' },
-                { model: User, as: 'receiver' }
+                {
+                    model: User,
+                    as: 'sender',
+
+                    attributes: ['id', 'firstName', 'lastName', 'phone', 'city', 'officeAddress', 'major', 'bio'],
+                },
+                {
+                    model: User,
+                    as: 'receiver',
+                    attributes: ['id', 'firstName', 'lastName', 'phone', 'city', 'officeAddress', 'major', 'bio'],
+                },
             ],
+
         });
 
         res.json(messages);
