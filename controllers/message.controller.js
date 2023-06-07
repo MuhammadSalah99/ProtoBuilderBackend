@@ -29,24 +29,23 @@ const sendMessage = async (req, res) => {
 };
 
 const getMessagesForUser = async (req, res) => {
+    const { senderId, receiverId } = req.params;
 
     try {
-        const { userId } = req.params
-
+        // Assuming you have defined associations between the Message and User models
         const messages = await Message.findAll({
             where: {
-                [Op.or]: [
-                    { senderId: userId },
-                    { receiverId: userId }
-                ]
+                senderId,
+                receiverId,
             },
             include: [
                 { model: User, as: 'sender' },
                 { model: User, as: 'receiver' }
-            ]
+            ],
         });
 
         res.json(messages);
+
     } catch (error) {
         console.error('Error fetching messages:', error);
         res.status(500).json({ error: error });
