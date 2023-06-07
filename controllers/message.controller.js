@@ -32,7 +32,6 @@ const getMessagesForUser = async (req, res) => {
     const { senderId, receiverId } = req.params;
 
     try {
-        // Assuming you have defined associations between the Message and User models
         const messages = await Message.findAll({
             where: {
                 senderId,
