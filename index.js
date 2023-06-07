@@ -15,12 +15,12 @@ const Message = db.messages
 
 const server = http.createServer(app)
 const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['my-custom-header'],
-    credentials: true,
-  },
+    cors: {
+        origin: '*',
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['my-custom-header'],
+        credentials: true,
+    },
 });
 
 // parse requests of content-type - application/json
@@ -42,24 +42,52 @@ db.sequelize.sync()
     .catch((err) => {
         console.log("failed to sync db: " + err.message)
     })
+const chatRooms = {};
+
 io.on('connection', (socket) => {
-    console.log('New client connected');
+    socket.on('joinRoom', (roomID) => {
+        // Create the chat room if it doesn't exist
+        if (!chatRooms[roomID]) {
+            chatRooms[roomID] = [];
+        }
 
-    // Handle new messages
-    socket.on('newMessage', async (message) => {
+        // Add the socket to the chat room
+        chatRooms[roomID].push(socket);
+
+        // Emit an event to notify the user that they have joined the room
+        socket.emit('roomJoined', roomID);
+    });
+
+    socket.on('sendMessage', async (data) => {
+        const { roomID, message, senderId, receiverId } = data;
+
+        // Save the message to the database
         try {
-            // Save the message to the database
-            const savedMessage = await Message.create(message);
+            const savedMessage = await Message.create({
+                text: message,
+                senderId,
+                receiverId,
+            });
 
-            // Broadcast the new message to all connected clients
-            io.emit('newMessage', savedMessage);
+            // Broadcast the message to all sockets in the chat room
+            chatRooms[roomID].forEach((socket) => {
+                socket.emit('newMessage', savedMessage);
+            });
         } catch (error) {
             console.error('Error saving message:', error);
         }
     });
 
     socket.on('disconnect', () => {
-        console.log('Client disconnected');
+        // Remove the socket from the chat room when the user disconnects
+        for (const roomID in chatRooms) {
+            const sockets = chatRooms[roomID];
+            const index = sockets.indexOf(socket);
+            if (index !== -1) {
+                sockets.splice(index, 1);
+                break;
+            }
+        }
     });
 });
 
