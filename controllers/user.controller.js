@@ -121,7 +121,7 @@ const getUserById = async (req, res) => {
     try {
         // Find the user by ID
         const user = await User.findByPk(userId, {
-            attributes: ['firstName', 'lastName', 'major', 'city', 'officeAddress', 'phone', 'bio'],
+            attributes: ['firstName', 'lastName', 'major', 'city', 'officeAddress', 'phone', 'bio', 'profilePic'],
         });
 
         if (!user) {
@@ -137,7 +137,7 @@ const getUserById = async (req, res) => {
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.findAll({
-            attributes: ['id' ,'firstName', 'lastName', 'phone', 'city', 'officeAddress', 'major', 'bio'],
+            attributes: ['id', 'firstName', 'lastName', 'phone', 'city', 'officeAddress', 'major', 'bio', 'profilePic'],
             where: { role: 'Engineer' },
         });
         res.json(users);
