@@ -8,8 +8,8 @@ const getAllBlogs = async (req, res) => {
             include: [
                 {
                     model: User,
-                    as: 'writer',
-                    attributes: ['id', 'firstName', 'latName']
+                    as: 'user',
+                    attributes: ['id', 'firstName', 'lastName']
                 }
             ]
 
