@@ -7,6 +7,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
+        thumbNail: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
     })
     return Blog
 

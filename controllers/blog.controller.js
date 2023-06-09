@@ -41,7 +41,7 @@ async function getBlogById(req, res) {
 
 async function updateBlog(req, res) {
   const blogId = req.params.id;
-  const { title, content } = req.body;
+  const { title, content, thumbNail } = req.body;
   
   try {
     const blog = await Blog.findByPk(blogId);
@@ -50,6 +50,7 @@ async function updateBlog(req, res) {
     }
     blog.title = title;
     blog.content = content;
+    blog.thumbNail = thumbNail
     await blog.save();
     res.json(blog);
   } catch (error) {
