@@ -13,10 +13,10 @@ const getAllBlogs = async (req, res) =>  {
 }
 
 async function createBlog(req, res) {
-  const { title, content, userId , thumbNail} = req.body;
+  const { title, content, userId , thumbNail, expert} = req.body;
   
   try {
-    const blog = await Blog.create({ title, content, userId , thumbNail});
+    const blog = await Blog.create({ title, content, userId ,expert, thumbNail});
     res.status(201).json(blog);
   } catch (error) {
     console.error(error);
