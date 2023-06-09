@@ -13,10 +13,10 @@ const getAllBlogs = async (req, res) =>  {
 }
 
 async function createBlog(req, res) {
-  const { title, content, userId } = req.body;
+  const { title, content, userId , thumbNail} = req.body;
   
   try {
-    const blog = await Blog.create({ title, content, userId });
+    const blog = await Blog.create({ title, content, userId , thumbNail});
     res.status(201).json(blog);
   } catch (error) {
     console.error(error);
@@ -41,7 +41,7 @@ async function getBlogById(req, res) {
 
 async function updateBlog(req, res) {
   const blogId = req.params.id;
-  const { title, content, thumbNail } = req.body;
+  const { title, content,  thumbNail} = req.body;
   
   try {
     const blog = await Blog.findByPk(blogId);
