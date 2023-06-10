@@ -38,7 +38,13 @@ async function getBlogById(req, res) {
     const blogId = req.params.id;
 
     try {
-        const blog = await Blog.findByPk(blogId);
+        const blog = await Blog.findByPk(blogId, {
+            include:  {
+                model: User,
+                as: 'user',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        });
         if (!blog) {
             return res.status(404).json({ message: 'Blog not found' });
         }
