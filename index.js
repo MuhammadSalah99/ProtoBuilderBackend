@@ -35,61 +35,14 @@ app.use(cors({
     origin: '*',
 }));
 
-db.sequelize.sync()
+db.sequelize.sync({force: true})
     .then(() => {
         console.log("synced db")
     })
     .catch((err) => {
         console.log("failed to sync db: " + err.message)
-    })
-const chatRooms = {};
+ })
 
-io.on('connection', (socket) => {
-    socket.on('joinRoom', (roomID) => {
-        // Create the chat room if it doesn't exist
-        if (!chatRooms[roomID]) {
-            chatRooms[roomID] = [];
-        }
-
-        // Add the socket to the chat room
-        chatRooms[roomID].push(socket);
-
-        // Emit an event to notify the user that they have joined the room
-        socket.emit('roomJoined', roomID);
-    });
-
-    socket.on('sendMessage', async (data) => {
-        const { roomID, message, senderId, receiverId } = data;
-
-        // Save the message to the database
-        try {
-            const savedMessage = await Message.create({
-                text: message,
-                senderId,
-                receiverId,
-            });
-
-            // Broadcast the message to all sockets in the chat room
-            chatRooms[roomID].forEach((socket) => {
-                socket.emit('newMessage', savedMessage);
-            });
-        } catch (error) {
-            console.error('Error saving message:', error);
-        }
-    });
-
-    socket.on('disconnect', () => {
-        // Remove the socket from the chat room when the user disconnects
-        for (const roomID in chatRooms) {
-            const sockets = chatRooms[roomID];
-            const index = sockets.indexOf(socket);
-            if (index !== -1) {
-                sockets.splice(index, 1);
-                break;
-            }
-        }
-    });
-});
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to ProtoBuilder." });

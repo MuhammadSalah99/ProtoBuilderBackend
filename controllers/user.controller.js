@@ -146,10 +146,11 @@ const getAllUsers = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch users' });
     }
 };
+
 module.exports = {
     signup,
     login,
     getAllUsers,
     editUser,
-    getUserById
+    getUserById,
 }

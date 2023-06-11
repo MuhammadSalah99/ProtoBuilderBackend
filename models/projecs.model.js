@@ -8,6 +8,17 @@ module.exports = (sequelize, Sequelize) => {
         },
         clientName: {
             type: Sequelize.STRING
+        },
+        thumbNail: {
+            type: Sequelize.STRING,
+        },
+        projectImages: {
+            type:Sequelize.ARRAY(Sequelize.STRING),
+            defaultValue: []
+        },
+        image360: {
+            type: Sequelize.STRING,
+            allowNull: true
         }
     });
 

@@ -61,9 +61,45 @@ const getMessagesForUser = async (req, res) => {
         res.status(500).json({ error: error });
     }
 };
+async function getUniqueUsersByUser(req, res) {
+    const userId = req.params.userId;
+
+    try {
+        // Get unique users who sent messages to the specified user
+        const senders = await Message.findAll({
+            where: {
+                receiverId: userId,
+            },
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName'],
+            },
+        });
+
+        // Get unique users whom the specified user sent messages to
+        const receivers = await Message.findAll({
+            where: {
+                senderId: userId,
+            },
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName'],
+            },
+        });
+
+        const users = [...senders, ...receivers];
+
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+}
+
 
 module.exports = {
     getMessages,
     sendMessage,
-    getMessagesForUser
+    getMessagesForUser,
+    getUniqueUsersByUser
 }
