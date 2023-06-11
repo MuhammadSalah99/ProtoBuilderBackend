@@ -9,7 +9,7 @@ router.post('/blogs', blogCont.createBlog);
 
 router.get('/blogs/:id', blogCont.getBlogById);
 
-router.get('/blogs/:userId', blogCont.getBlogsByUser);
+router.get('/blogs/by/:userId', blogCont.getBlogsByUser);
 
 router.put('/blogs/:id', blogCont.updateBlog);
 
