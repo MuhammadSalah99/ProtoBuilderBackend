@@ -10,7 +10,7 @@ router.post('/projects', projectController.createProject);
 // GET /projects/:id
 router.get('/projects/:id', projectController.getProjectById);
 
-router.get('/projects/by:userId', projectController.getProjectByUser);
+router.get('/projects/by/:userId', projectController.getProjectByUser);
 // PUT /projects/:id
 router.put('/projects/:id', projectController.updateProject);
 
