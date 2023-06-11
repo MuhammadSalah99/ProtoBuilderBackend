@@ -21,7 +21,26 @@ const getAllBlogs = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 }
+async function getBlogsByUser(req, res) {
+    const userId = req.params.userId;
 
+    try {
+        const blogs = await Blog.findAll({
+            where: {
+                userId: userId,
+            },
+            include: {
+                model: User,
+                attributes: ['id', 'name', 'email'], // Include specific user attributes you need
+            },
+        });
+
+        res.json(blogs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+}
 async function createBlog(req, res) {
     const { title, content, userId, thumbNail, expert } = req.body;
 
@@ -39,7 +58,7 @@ async function getBlogById(req, res) {
 
     try {
         const blog = await Blog.findByPk(blogId, {
-            include:  {
+            include: {
                 model: User,
                 as: 'user',
                 attributes: ['id', 'firstName', 'lastName']
@@ -96,6 +115,7 @@ module.exports = {
     createBlog,
     getBlogById,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    getBlogsByUser
 };
 
