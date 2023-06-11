@@ -28,11 +28,7 @@ async function getBlogsByUser(req, res) {
         const blogs = await Blog.findAll({
             where: {
                 userId: userId,
-            },
-            include: {
-                model: User,
-                attributes: ['id', 'name', 'email'], // Include specific user attributes you need
-            },
+            }
         });
 
         res.json(blogs);
