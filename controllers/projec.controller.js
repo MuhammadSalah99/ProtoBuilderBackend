@@ -4,7 +4,15 @@ const User = db.users
 // GET /projects
 async function getAllProjects(req, res) {
     try {
-        const projects = await Project.findAll();
+        const projects = await Project.findAll({
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: ['id', 'firstName', 'lastName']
+                }
+            ]
+        });
         res.json(projects);
     } catch (error) {
         console.error(error);
@@ -28,11 +36,11 @@ async function getProjectByUser(req, res) {
     }
 }
 async function createProject(req, res) {
-    const { title, content, clientName, thumbNail, projectImages, image360 } = req.body;
+    const { title, content,userId ,clientName, thumbNail, projectImages, image360 } = req.body;
 
 
     try {
-        const project = await Project.create({ title, content, clientName, thumbNail, projectImages, image360 });
+        const project = await Project.create({ title, content,userId, clientName, thumbNail, projectImages, image360 });
         res.status(201).json(project);
     } catch (error) {
         console.error(error);
@@ -44,7 +52,14 @@ async function getProjectById(req, res) {
     const projectId = req.params.id;
 
     try {
-        const project = await Project.findByPk(projectId);
+        const project = await Project.findByPk(projectId, {
+            include: {
+                model: User,
+                as: 'user',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        }
+        );
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
