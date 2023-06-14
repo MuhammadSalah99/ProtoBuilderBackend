@@ -14,15 +14,6 @@ const app = express();
 const Message = db.messages
 
 const server = http.createServer(app)
-const io = new Server(server, {
-    cors: {
-        origin: '*',
-        methods: ['GET', 'POST'],
-        allowedHeaders: ['my-custom-header'],
-        credentials: true,
-    },
-});
-
 // parse requests of content-type - application/json
 app.use(express.json());
 
@@ -55,7 +46,7 @@ app.use('/api/msg', messageRouter)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 

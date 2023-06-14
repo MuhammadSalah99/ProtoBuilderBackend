@@ -10,7 +10,22 @@ const getMessages = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch messages' });
     }
 };
+const getMessagesSentToUser = async (req, res) => {
+    const userId = req.params.userId;
 
+    try {
+        const senders = await Message.findAll({
+            where: { receiverId: userId },
+            attributes: ['senderId'],
+            group: ['senderId']
+        });
+
+        res.json(senders);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 const sendMessage = async (req, res) => {
     try {
         const { senderId, receiverId, content } = req.body;
@@ -101,5 +116,6 @@ module.exports = {
     getMessages,
     sendMessage,
     getMessagesForUser,
-    getUniqueUsersByUser
+    getUniqueUsersByUser,
+    getMessagesSentToUser
 }
