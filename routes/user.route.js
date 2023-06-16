@@ -12,7 +12,7 @@ router.post('/login',login, login)
 router.put('/edit/:userId', editUser)
 
 
-;
+
 router.get('/', getAllUsers) 
 
 router.get('/:userId', getUserById) 

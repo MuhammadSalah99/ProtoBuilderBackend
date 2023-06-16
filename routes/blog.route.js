@@ -2,10 +2,10 @@ const express = require('express')
 const blogCont = require('../controllers/blog.controller.js')
 const {getAllBlogs, createBlog, getBlogById, updateBlog, deleteBlog }  = blogCont;
 const router  = express.Router()
-
+const { validateBlogFields } = require('../middleware/BlogsMiddleware.js') 
 router.get('/blogs', blogCont.getAllBlogs);
 
-router.post('/blogs', blogCont.createBlog);
+router.post('/blogs',validateBlogFields,  createBlog);
 
 router.get('/blogs/:id', blogCont.getBlogById);
 
