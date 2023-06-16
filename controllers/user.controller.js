@@ -71,7 +71,7 @@ const login = async (req, res) => {
 
                 return res.status(201).json({ token, user })
             } else {
-                return res.status(401).send("Authentication failed");
+                return res.status(401).send("Email or Password are incorrect");
             }
         } else {
             return res.status(401).send("Authentication failed");

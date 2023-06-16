@@ -1,13 +1,13 @@
 const express = require('express')
 const userCont = require('../controllers/user.controller.js')
 const {signup, login, editUser, getUserById, getAllUsers} = userCont;
-const userAuth = require('../middleware/userAuth.js')
+const {userAuth, saveUser, checkLogin} = require('../middleware/userAuth.js')
 
 const router = express.Router();
 
-router.post('/signup', signup)
+router.post('/signup',saveUser ,signup)
 
-router.post('/login', login)
+router.post('/login',login, login)
 
 router.put('/edit/:userId', editUser)
 
