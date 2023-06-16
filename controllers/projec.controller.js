@@ -73,7 +73,7 @@ async function getProjectById(req, res) {
 // PUT /projects/:id
 async function updateProject(req, res) {
     const projectId = req.params.id;
-    const { title, content, clientName } = req.body;
+    const { title, content, clientName, thumbNail, projectImages } = req.body;
 
     try {
         const project = await Project.findByPk(projectId);
@@ -83,6 +83,8 @@ async function updateProject(req, res) {
         project.title = title;
         project.content = content;
         project.clientName = clientName;
+        project.thumbNail = thumbNail;
+        project.projectImages = projectImages;
         await project.save();
         res.json(project);
     } catch (error) {
