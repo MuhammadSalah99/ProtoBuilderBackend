@@ -149,7 +149,6 @@ const getAllUsers = async (req, res) => {
 const getClients = async (req, res) => {
     try {
         const users = await User.findAll({
-            attributes: ['id', 'firstName', 'lastName', 'phone', 'city', 'officeAddress', 'major', 'bio', 'profilePic'],
             where: { role: 'Client' },
         });
         res.json(users);
