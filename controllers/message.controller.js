@@ -50,7 +50,8 @@ const getMessagesForUser = async (req, res) => {
     try {
         const messages = await Message.findAll({
             where: {
-                [Op.or]: [{senderId: receiverId}, {receiverId: senderId}]
+                senderId: [senderId, receiverId],
+                receiverId: [senderId, receiverId],
             },
             include: [
                 {
@@ -76,13 +77,13 @@ const getMessagesForUser = async (req, res) => {
     }
 };
 async function getUniqueUsersByUser(req, res) {
-    const {userId} = req.params;
+    const { userId } = req.params;
 
     try {
         // Get unique users who sent messages to the specified user
         const senders = await User.findByPk(userId);
 
-                
+
 
         res.json(senders);
     } catch (error) {
