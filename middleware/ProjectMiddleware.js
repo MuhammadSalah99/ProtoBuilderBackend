@@ -1,9 +1,9 @@
 const express = require('express');
 
 function validateProjectFields(req, res, next) {
-  const { title, client, content, thumbNail, projectImages } = req.body;
+  const { title,clientName , content, thumbNail, projectImages } = req.body;
 
-  if (!title || !client || !content || !thumbNail || !projectImages) {
+  if (!title || !clientName || !content || !thumbNail || !projectImages) {
     return res.status(400).json({ error: 'Missing required fields.' });
   }
 
