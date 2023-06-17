@@ -7,6 +7,6 @@ const { getMessages, sendMessage, getMessagesForUser } = messagesCont
 router.get('/messages',  messagesCont.getMessages);
 router.post('/messages',  messagesCont.sendMessage);
 router.get('/messages/:senderId/:receiverId', messagesCont.getMessagesForUser);
-router.get('/:userId/msgs', messagesCont.getMessagesSentToUser)
+router.get('/messages/by/:userId', messagesCont.getUniqueUsersByUser);
 module.exports = router;
 

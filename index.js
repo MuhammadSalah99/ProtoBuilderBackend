@@ -32,7 +32,7 @@ db.sequelize.sync()
     })
     .catch((err) => {
         console.log("failed to sync db: " + err.message)
- })
+    })
 
 
 app.get("/", (req, res) => {

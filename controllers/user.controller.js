@@ -146,6 +146,19 @@ const getAllUsers = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch users' });
     }
 };
+const getClients = async (req, res) => {
+    try {
+        const users = await User.findAll({
+            attributes: ['id', 'firstName', 'lastName', 'phone', 'city', 'officeAddress', 'major', 'bio', 'profilePic'],
+            where: { role: 'Client' },
+        });
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch users' });
+    }
+};
+
 
 module.exports = {
     signup,
@@ -153,4 +166,5 @@ module.exports = {
     getAllUsers,
     editUser,
     getUserById,
+    getClients
 }

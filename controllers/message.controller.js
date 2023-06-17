@@ -50,8 +50,7 @@ const getMessagesForUser = async (req, res) => {
     try {
         const messages = await Message.findAll({
             where: {
-                senderId: [senderId, receiverId],
-                receiverId: [senderId, receiverId],
+                [Op.or]: [{senderId: receiverId}, {receiverId: senderId}]
             },
             include: [
                 {
@@ -77,34 +76,15 @@ const getMessagesForUser = async (req, res) => {
     }
 };
 async function getUniqueUsersByUser(req, res) {
-    const userId = req.params.userId;
+    const {userId} = req.params;
 
     try {
         // Get unique users who sent messages to the specified user
-        const senders = await Message.findAll({
-            where: {
-                receiverId: userId,
-            },
-            include: {
-                model: User,
-                attributes: ['id', 'firstName', 'lastName'],
-            },
-        });
+        const senders = await User.findByPk(userId);
 
-        // Get unique users whom the specified user sent messages to
-        const receivers = await Message.findAll({
-            where: {
-                senderId: userId,
-            },
-            include: {
-                model: User,
-                attributes: ['id', 'firstName', 'lastName'],
-            },
-        });
+                
 
-        const users = [...senders, ...receivers];
-
-        res.json(users);
+        res.json(senders);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
